@@ -63,7 +63,8 @@ require 'liquid/htmltags'
 require 'liquid/standardfilters'
 require 'liquid/condition'
 require 'liquid/module_ex'
-
+require 'active_support/core_ext/string/multibyte'
+require 'active_support/core_ext/string/filters'
 # Load all the tags of the standard library
 #
 Dir[File.dirname(__FILE__) + '/liquid/tags/*.rb'].each { |f| require f }

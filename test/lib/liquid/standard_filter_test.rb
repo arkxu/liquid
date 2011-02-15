@@ -35,8 +35,11 @@ class StandardFiltersTest < Test::Unit::TestCase
   def test_truncate
     assert_equal '1234...', @filters.truncate('1234567890', 7)
     assert_equal '1234567890', @filters.truncate('1234567890', 20)
-    assert_equal '...', @filters.truncate('1234567890', 0)
-    assert_equal '1234567890', @filters.truncate('1234567890')
+    assert_equal '1234567890', @filters.truncate('1234567890',10)
+    assert_equal '中文...', @filters.truncate('中文的测试结果是什么',5)
+    assert_equal '中文的...', @filters.truncate('中文的测试结果是什么',6)
+    assert_equal '中文的测试结果是什么', @filters.truncate('中文的测试结果是什么',10)
+    assert_equal '中文的测试结果是什么', @filters.truncate('中文的测试结果是什么',11)
   end
 
   def test_escape

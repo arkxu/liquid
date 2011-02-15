@@ -37,10 +37,10 @@ module Liquid
 
     # Truncate a string down to x characters
     def truncate(input, length = 50, truncate_string = "...")
-      if input.nil? then return end
-      l = length.to_i - truncate_string.length
-      l = 0 if l < 0
-      input.length > length.to_i ? input[0...l] + truncate_string : input
+      options = {}
+      options[:omission] = truncate_string
+      options[:length] = length
+      input.truncate(options.delete(:length), options) if input
     end
 
     def truncatewords(input, words = 15, truncate_string = "...")
