@@ -4,8 +4,8 @@
 
 * truncate : user active_support api to prevent UTF coding chars broken
 * mod_by : e.g {{ 11 | mod_by:2 }} #=> 1
-* desc : sort elements of the array descending 
-* split : split the string to array. e.g {{ "a,b,c" | split ',' }}
+* desc : sort elements of the array descending. e.g {% assign foo = values | desc:'name' %}
+* split : split the string to array. e.g {{ "a,b,c" | split:',' }}
 * assign : enhanced assign to do advanced operation. e.g {% assign foo = values | size %}
 
 ## Introduction

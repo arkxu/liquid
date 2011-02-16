@@ -30,7 +30,6 @@ module Liquid
             context[a]
           end
           begin
-#            debugger
             output = context.invoke(filter[0], output, *filterargs)
             context.scopes.last[@to] = output
           rescue FilterNotFound
