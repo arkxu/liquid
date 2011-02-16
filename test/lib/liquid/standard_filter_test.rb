@@ -1,7 +1,13 @@
+# encoding: UTF-8
+
 require 'test_helper'
 
 class Filters
   include Liquid::StandardFilters
+end
+
+class MockModel
+  attr_accessor :v1
 end
 
 class StandardFiltersTest < Test::Unit::TestCase
@@ -70,9 +76,27 @@ class StandardFiltersTest < Test::Unit::TestCase
     assert_equal '1 - 2 - 3 - 4', @filters.join([1,2,3,4], ' - ')
   end
 
+  def test_split
+    assert_equal ["1","2","3","4"], @filters.split('1 2 3 4')
+    assert_equal ["1","2","3","4"], @filters.split('1,2,3,4', ',')
+  end
+
   def test_sort
     assert_equal [1,2,3,4], @filters.sort([4,3,2,1])
     assert_equal [{"a" => 1}, {"a" => 2}, {"a" => 3}, {"a" => 4}], @filters.sort([{"a" => 4}, {"a" => 3}, {"a" => 1}, {"a" => 2}], "a")
+  end
+
+  def test_desc
+    assert_equal [4,3,2,1], @filters.desc([1,2,3,4])
+    assert_equal [4,3,2,1], @filters.desc([4,3,2,1])
+    assert_equal [{"a" => 4}, {"a" => 3}, {"a" => 2}, {"a" => 1}], @filters.desc([{"a" => 4}, {"a" => 3}, {"a" => 1}, {"a" => 2}], "a")
+    assert_equal [{"a" => 4}, {"a" => 3}, {"a" => 2}, {"a" => 1}], @filters.desc([{"a" => 1}, {"a" => 2}, {"a" => 3}, {"a" => 4}], "a")
+    v1 = MockModel.new
+    v1.v1 = "v1"
+    v2 = MockModel.new
+    v2.v1 = "v2"
+    v = [v1,v2]
+    assert_equal [v2,v1], @filters.desc(v, "v1")
   end
 
   def test_map
@@ -163,6 +187,17 @@ class StandardFiltersTest < Test::Unit::TestCase
 
     assert_template_result "5", "{{ 15 | divided_by:3 }}"
     assert_template_result "Liquid error: divided by 0", "{{ 5 | divided_by:0 }}"
+  end
+
+  def test_mod_by
+    assert_template_result "0", "{{ 12 | mod_by:3 }}"
+    assert_template_result "2", "{{ 14 | mod_by:3 }}"
+
+    # Ruby v1.9.2-rc1, or higher, backwards compatible Float test
+    assert_match(/2\.(0)/, Template.parse("{{ 14 | mod_by:'3.0' }}").render)
+
+    assert_template_result "0", "{{ 15 | mod_by:15 }}"
+    #assert_template_result "Liquid error: mod by 0", "{{ 5 | mod_by:0 }}"
   end
 
   def test_append

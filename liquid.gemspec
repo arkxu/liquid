@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.version     = '2.2.2'
   s.summary     = "A secure, non-evaling end user template engine with aesthetic markup."
 
-  s.authors     = ["Tobias Luetke"]
-  s.email       = ["tobi@leetsoft.com"]
+  s.authors     = ["Ark Xu"]
+  s.email       = ["ark.work@gmail.com"]
   s.homepage    = "http://www.liquidmarkup.org"
 
   s.description = "A secure, non-evaling end user template engine with aesthetic markup."

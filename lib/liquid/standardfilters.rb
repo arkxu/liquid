@@ -66,6 +66,11 @@ module Liquid
       [input].flatten.join(glue)
     end
 
+    # Split the string to array
+    def split(input, s = ' ')
+      input.split(s)
+    end
+
     # Sort elements of the array
     # provide optional property with which to sort an array of hashes or drops
     def sort(input, property = nil)
@@ -76,6 +81,18 @@ module Liquid
         ary.sort {|a,b| a[property] <=> b[property] }
       elsif ary.first.respond_to?(property)
         ary.sort {|a,b| a.send(property) <=> b.send(property) }
+      end
+    end
+
+    # desc the array according to the propert if there is
+    def desc(input, property = nil)
+      ary = [input].flatten
+      if property.nil?
+        ary.sort {|a,b| b <=> a}
+      elsif ary.first.respond_to?('[]') and !ary.first[property].nil?
+        ary.sort {|a,b| b[property] <=> a[property] }
+      elsif ary.first.respond_to?(property)
+        ary.sort {|a,b| b.send(property) <=> a.send(property) }
       end
     end
 
@@ -205,6 +222,10 @@ module Liquid
     # division
     def divided_by(input, operand)
       to_number(input) / to_number(operand)
+    end
+
+    def mod_by(input, operand)
+      to_number(input) % to_number(operand)
     end
 
     private
