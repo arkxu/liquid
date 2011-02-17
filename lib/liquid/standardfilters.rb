@@ -68,7 +68,11 @@ module Liquid
 
     # Split the string to array
     def split(input, s = ' ')
-      input.split(s)
+      if input
+        input.split(s)
+      else
+        []
+      end
     end
 
     # Sort elements of the array
