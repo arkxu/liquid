@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = ["History.txt", "Manifest.txt", "README.md"]
 
   s.require_path = 'lib'
+  s.add_runtime_dependency('active_support')
 end
