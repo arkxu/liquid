@@ -4,7 +4,7 @@ module WillPaginate::Liquidized
     
     alias_method :will_paginate_original, :will_paginate
     
-    def will_paginate(collection, anchor = nil, prev_label = nil, next_label = nil)    
+    def will_paginate(collection, prev_label = nil, next_label = nil, anchor = nil)    
       opts = {}
       opts[:previous_label] = prev_label if prev_label
       opts[:next_label]     = next_label if next_label      
