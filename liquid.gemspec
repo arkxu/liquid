@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = ">= 1.3.7"
 
-  s.files             = Dir.glob("{lib}/**/*") + %w(MIT-LICENSE README.md)
+  s.files             = Dir.glob("{lib}/**/*") + %w(MIT-LICENSE README.textile)
 
   s.extra_rdoc_files  = ["History.txt", "Manifest.txt", "README.textile"]
 
