@@ -31,7 +31,6 @@ Liquid is a template engine which I wrote for very specific requirements
 
 ## What does it look like?
 
-<code>
   <ul id="products">
     {% for product in products %}
       <li>
@@ -42,8 +41,15 @@ Liquid is a template engine which I wrote for very specific requirements
       </li>
     {% endfor %}
   </ul>
-</code>
+	
+## Install
 
+Put the following code in Gemfile
+
+<pre>
+	gem "liquid", :git => "https://github.com/arkxu/liquid.git"
+</pre>
+	
 ## Howto use Liquid
 
 Liquid supports a very simple API based around the Liquid::Template class.
