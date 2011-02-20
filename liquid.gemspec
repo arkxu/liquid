@@ -19,12 +19,7 @@ Gem::Specification.new do |s|
 
   s.extra_rdoc_files  = ["History.txt", "Manifest.txt", "README.md"]
 
-<<<<<<< HEAD
   s.require_path = ['lib']
   
   s.add_dependency('will_paginate')
-=======
-  s.require_path = 'lib'
-  s.add_runtime_dependency('active_support')
->>>>>>> 490fc918f54133e824a973bc1586be53fbd2067b
 end
