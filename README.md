@@ -7,6 +7,11 @@
 * desc : sort elements of the array descending. e.g {% assign foo = values | desc:'name' %}
 * split : split the string to array. e.g {{ "a,b,c" | split:',' }}
 * assign : enhanced assign to do advanced operation. e.g {% assign foo = values | size %}
+* will_paginate : wrap the will paginate view helper into filter. e.g {% values | will_paginate : 'anchor', 'prev_label', 'next_label' %}
+  to make will_paginate filter works, you need to add the following code in controller. (the others is the same as will_paginate gem)
+
+template.render(render_params, :registers => {:controller => self})
+
 
 ## Introduction
 
