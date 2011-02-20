@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.files             = Dir.glob("{lib}/**/*") + %w(MIT-LICENSE README.md)
 
-  s.extra_rdoc_files  = ["History.txt", "Manifest.txt", "README.md"]
+  s.extra_rdoc_files  = ["History.txt", "Manifest.txt", "README.textile"]
 
   s.require_path = ['lib']
   
