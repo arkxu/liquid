@@ -6,3 +6,4 @@ if defined? ActionView::Template and ActionView::Template.respond_to? :register_
 else
   ActionView::Base
 end.register_template_handler(:liquid, LiquidView)
+
