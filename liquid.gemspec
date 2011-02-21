@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
   s.require_path = ['lib']
   
   s.add_dependency('will_paginate')
-  s.add_dependency('active_support')
+  s.add_dependency('activesupport')
 end
