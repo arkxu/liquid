@@ -15,10 +15,12 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = ">= 1.3.7"
 
-  s.files             = Dir.glob("{lib}/**/*") + %w(MIT-LICENSE README.md)
+  s.files             = Dir.glob("{lib}/**/*") + %w(MIT-LICENSE README.textile)
 
-  s.extra_rdoc_files  = ["History.txt", "Manifest.txt", "README.md"]
+  s.extra_rdoc_files  = ["History.txt", "Manifest.txt", "README.textile"]
 
-  s.require_path = 'lib'
-  s.add_runtime_dependency('active_support')
+  s.require_path = ['lib']
+  
+  s.add_dependency('will_paginate')
+  s.add_dependency('activesupport')
 end

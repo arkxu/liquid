@@ -1,5 +1,7 @@
 * url_encode : encoding the string that can be used in url
 
+* Add will_paginate filter
+
 * truncate : user active_support api to prevent UTF coding chars broken
  mod_by : e.g {{ 11 | mod_by:2 }} #=> 1
  desc : sort elements of the array descending. e.g {% assign foo = values | desc:'name' %}

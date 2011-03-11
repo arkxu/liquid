@@ -1,15 +1,21 @@
-# Liquid template engine
+h1. Liquid template engine
 
-## New added/changed tags
+h2. New added/changed tags
 
 * truncate : user active_support api to prevent UTF coding chars broken
 * mod_by : e.g {{ 11 | mod_by:2 }} #=> 1
 * desc : sort elements of the array descending. e.g {% assign foo = values | desc:'name' %}
 * split : split the string to array. e.g {{ "a,b,c" | split:',' }}
 * assign : enhanced assign to do advanced operation. e.g {% assign foo = values | size %}
+* will_paginate : wrap the will paginate view helper into filter. e.g {{ values | will_paginate : 'prev_label', 'next_label', 'anchor' }}
+  to make will_paginate filter works, you need to add the following code in controller. (the others is the same as will_paginate gem)
 * url_encode : encoding the given string for url usage. e.g {{ slug | url_encode }}
 
-## Introduction
+<pre>
+  template.render(render_params, :registers => {:controller => self})
+</pre>
+
+h2. Introduction
 
 Liquid is a template engine which I wrote for very specific requirements
 
@@ -17,7 +23,7 @@ Liquid is a template engine which I wrote for very specific requirements
 * It needs to be non evaling and secure. Liquid templates are made so that users can edit them. You don't want to run code on your server which your users wrote.
 * It has to be stateless. Compile and render steps have to be seperate so that the expensive parsing and compiling can be done once and later on you can just render it passing in a hash with local variables and objects.
 
-## Why should I use Liquid
+h2. Why should I use Liquid
 
 * You want to allow your users to edit the appearance of your application but don't want them to run **insecure code on your server**.
 * You want to render templates directly from the database
@@ -25,8 +31,9 @@ Liquid is a template engine which I wrote for very specific requirements
 * You need a template engine which does HTML just as well as emails
 * You don't like the markup of your current templating engine
 
-## What does it look like?
+h2. What does it look like?
 
+<pre>
   <ul id="products">
     {% for product in products %}
       <li>
@@ -37,16 +44,17 @@ Liquid is a template engine which I wrote for very specific requirements
       </li>
     {% endfor %}
   </ul>
-	
-## Install
+</pre>
+
+h2. Install
 
 Put the following code in Gemfile
 
 <pre>
-	gem "liquid", :git => "https://github.com/arkxu/liquid.git"
+gem "liquid", :git => "https://github.com/arkxu/liquid.git"
 </pre>
-	
-## Howto use Liquid
+
+h2. Howto use Liquid
 
 Liquid supports a very simple API based around the Liquid::Template class.
 For standard use you can just pass it the content of a file and call render with a parameters hash.

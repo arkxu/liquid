@@ -65,6 +65,11 @@ require 'liquid/condition'
 require 'liquid/module_ex'
 require 'active_support/core_ext/string/multibyte'
 require 'active_support/core_ext/string/filters'
+require 'will_paginate'
+require 'will_paginate/view_helpers'
+require 'will_paginate/view_helpers/action_view'
+require 'will_paginate/liquidized'
+require 'will_paginate/liquidized/view_helpers'
 # Load all the tags of the standard library
 #
 Dir[File.dirname(__FILE__) + '/liquid/tags/*.rb'].each { |f| require f }
