@@ -215,4 +215,8 @@ class StandardFiltersTest < Test::Unit::TestCase
   def test_cannot_access_private_methods
     assert_template_result('a',"{{ 'a' | to_number }}")
   end
+  
+  def test_url_encode
+    assert_template_result "a+b%E4%B8%AD%E6%96%87++%E8%BF%98%E6%9C%89", "{{ 'a b中文  还有' | url_encode }}"
+  end
 end # StandardFiltersTest

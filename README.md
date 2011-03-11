@@ -7,6 +7,7 @@
 * desc : sort elements of the array descending. e.g {% assign foo = values | desc:'name' %}
 * split : split the string to array. e.g {{ "a,b,c" | split:',' }}
 * assign : enhanced assign to do advanced operation. e.g {% assign foo = values | size %}
+* url_encode : encoding the given string for url usage. e.g {{ slug | url_encode }}
 
 ## Introduction
 

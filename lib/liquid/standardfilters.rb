@@ -232,6 +232,10 @@ module Liquid
       to_number(input) % to_number(operand)
     end
 
+    def url_encode(input)
+      CGI.escape(input)
+    end
+      
     private
 
       def to_number(obj)
