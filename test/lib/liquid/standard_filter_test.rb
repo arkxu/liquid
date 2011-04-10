@@ -223,5 +223,8 @@ class StandardFiltersTest < Test::Unit::TestCase
   def test_add_locale
     assert_template_result "http://www.google.com?b=1&locale=en-US", "{{ 'http://www.google.com?b=1&locale=en-US' | keep_locale:'zh-CN' }}"
     assert_template_result "http://www.google.com/c?b=1&locale=zh-CN", "{{ 'http://www.google.com/c?b=1' | keep_locale:'zh-CN' }}"
+    assert_template_result "/c?b=1&locale=zh-CN", "{{ '/c?b=1' | keep_locale:'zh-CN' }}"
+    assert_template_result "www.sina.com.cn/c?b=1&locale=zh-CN", "{{ 'www.sina.com.cn/c?b=1' | keep_locale:'zh-CN' }}"
+    assert_template_result "/good?locale=zh-CN", "{{ '/good' | keep_locale:'zh-CN' }}"
   end
 end # StandardFiltersTest

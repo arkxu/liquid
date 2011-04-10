@@ -239,11 +239,23 @@ module Liquid
     
     def keep_locale(input, current_locale)
       url = URI.parse(input)
-      uri_params = CGI.parse(url.query)
-      if uri_params['locale'].empty?
+      uri_params = {}
+      if url.query
+        uri_params = CGI.parse(url.query)
+      end
+      if uri_params['locale'].nil? || uri_params['locale'].empty?
         uri_params['locale'] = current_locale
       end
-      url.scheme + "://" + url.host + url.path + "?" + hash_to_params(uri_params)
+      
+      if url.host && url.scheme
+        url.scheme + "://" + url.host + url.path + "?" + hash_to_params(uri_params)
+      elsif url.host
+        url.host + url.path + "?" + hash_to_params(uri_params)
+      elsif url.path
+        url.path + "?" + hash_to_params(uri_params)
+      else
+        "?" + hash_to_params(uri_params)
+      end
     end
       
     private
