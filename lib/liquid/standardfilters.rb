@@ -1,4 +1,5 @@
 require 'cgi'
+require 'uri'
 
 module Liquid
 
@@ -235,6 +236,15 @@ module Liquid
     def url_encode(input)
       CGI.escape(input)
     end
+    
+    def keep_locale(input, current_locale)
+      url = URI.parse(input)
+      uri_params = CGI.parse(url.query)
+      if uri_params['locale'].empty?
+        uri_params['locale'] = current_locale
+      end
+      url.scheme + "://" + url.host + url.path + "?" + hash_to_params(uri_params)
+    end
       
     private
 
@@ -248,7 +258,18 @@ module Liquid
           0
         end
       end
-
+      
+      def hash_to_params(hash)
+        hash.keys.inject("") do |qs, key|
+          qs << "&" unless qs.blank?
+          qs << if Array === hash[key]
+                  k = CGI.escape(key.to_s)
+                  hash[key].map { |value| "#{k}=" << CGI.escape(value.to_s) }.join("&")
+                else
+                  CGI.escape(key.to_s) << "=" << CGI.escape(hash[key].to_s)
+                end
+        end
+      end
   end
 
   Template.register_filter(StandardFilters)

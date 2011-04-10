@@ -219,4 +219,9 @@ class StandardFiltersTest < Test::Unit::TestCase
   def test_url_encode
     assert_template_result "a+b%E4%B8%AD%E6%96%87++%E8%BF%98%E6%9C%89", "{{ 'a b中文  还有' | url_encode }}"
   end
+  
+  def test_add_locale
+    assert_template_result "http://www.google.com?b=1&locale=en-US", "{{ 'http://www.google.com?b=1&locale=en-US' | keep_locale:'zh-CN' }}"
+    assert_template_result "http://www.google.com/c?b=1&locale=zh-CN", "{{ 'http://www.google.com/c?b=1' | keep_locale:'zh-CN' }}"
+  end
 end # StandardFiltersTest
