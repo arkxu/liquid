@@ -236,28 +236,30 @@ module Liquid
     def url_encode(input)
       CGI.escape(input)
     end
-    
+
     def keep_locale(input, current_locale)
       url = URI.parse(input)
       uri_params = {}
       if url.query
         uri_params = CGI.parse(url.query)
       end
-      if uri_params['locale'].nil? || uri_params['locale'].empty?
+      if (uri_params['locale'].nil? || uri_params['locale'].empty?) && !current_locale.nil? && !current_locale.empty?
         uri_params['locale'] = current_locale
       end
+
+      param = hash_to_params(uri_params).empty? ? "" : "?" + hash_to_params(uri_params)
       
       if url.host && url.scheme
-        url.scheme + "://" + url.host + url.path + "?" + hash_to_params(uri_params)
+        url.scheme + "://" + url.host + url.path + param
       elsif url.host
-        url.host + url.path + "?" + hash_to_params(uri_params)
+        url.host + url.path  + param
       elsif url.path
-        url.path + "?" + hash_to_params(uri_params)
+        url.path + param
       else
-        "?" + hash_to_params(uri_params)
+        param
       end
     end
-      
+
     private
 
       def to_number(obj)
@@ -270,16 +272,16 @@ module Liquid
           0
         end
       end
-      
+
       def hash_to_params(hash)
         hash.keys.inject("") do |qs, key|
           qs << "&" unless qs.blank?
           qs << if Array === hash[key]
-                  k = CGI.escape(key.to_s)
-                  hash[key].map { |value| "#{k}=" << CGI.escape(value.to_s) }.join("&")
-                else
-                  CGI.escape(key.to_s) << "=" << CGI.escape(hash[key].to_s)
-                end
+          k = CGI.escape(key.to_s)
+          hash[key].map { |value| "#{k}=" << CGI.escape(value.to_s) }.join("&")
+          else
+            CGI.escape(key.to_s) << "=" << CGI.escape(hash[key].to_s)
+          end
         end
       end
   end

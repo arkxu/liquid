@@ -226,5 +226,7 @@ class StandardFiltersTest < Test::Unit::TestCase
     assert_template_result "/c?b=1&locale=zh-CN", "{{ '/c?b=1' | keep_locale:'zh-CN' }}"
     assert_template_result "www.sina.com.cn/c?b=1&locale=zh-CN", "{{ 'www.sina.com.cn/c?b=1' | keep_locale:'zh-CN' }}"
     assert_template_result "/good?locale=zh-CN", "{{ '/good' | keep_locale:'zh-CN' }}"
+    assert_template_result "/good", "{{ '/good' | keep_locale:'' }}"
+    assert_template_result "/good", "{{ '/good' | keep_locale:nil }}"
   end
 end # StandardFiltersTest
