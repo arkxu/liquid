@@ -9,12 +9,11 @@ h2. New added/changed tags
 * assign : enhanced assign to do advanced operation. e.g {% assign foo = values | size %}
 * will_paginate : wrap the will paginate view helper into filter. e.g {{ values | will_paginate : 'prev_label', 'next_label', 'anchor' }}
   to make will_paginate filter works, you need to add the following code in controller. (the others is the same as will_paginate gem)
+	<pre>
+	  template.render(render_params, :registers => {:controller => self})
+	</pre>
+
 * url_encode : encoding the given string for url usage. e.g {{ slug | url_encode }}
-
-<pre>
-  template.render(render_params, :registers => {:controller => self})
-</pre>
-
 * remove_param : remove the specified parameter from the given url. e.g {{ 'http://www.google.com?b=1&locale=en-US' | remove_param:'locale' }}
 * keep_locale : keep the current locale parameter in url if there is, otherwise add the specified. e.g {{ 'http://www.google.com/c?b=1' | keep_locale:'zh-CN' }}
 
