@@ -246,18 +246,17 @@ module Liquid
       if (uri_params['locale'].nil? || uri_params['locale'].empty?) && !current_locale.nil? && !current_locale.empty?
         uri_params['locale'] = current_locale
       end
+      url_add_param(url, uri_params)
+    end
 
-      param = hash_to_params(uri_params).empty? ? "" : "?" + hash_to_params(uri_params)
-      
-      if url.host && url.scheme
-        url.scheme + "://" + url.host + url.path + param
-      elsif url.host
-        url.host + url.path  + param
-      elsif url.path
-        url.path + param
-      else
-        param
+    def remove_param(input, parameter)
+      url = URI.parse(input)
+      uri_params = {}
+      if url.query
+        uri_params = CGI.parse(url.query)
+        uri_params.delete(parameter)
       end
+      url_add_param(url, uri_params)
     end
 
     private
@@ -282,6 +281,20 @@ module Liquid
           else
             CGI.escape(key.to_s) << "=" << CGI.escape(hash[key].to_s)
           end
+        end
+      end
+      
+      def url_add_param(uri, uri_params)
+        param = hash_to_params(uri_params).empty? ? "" : "?" + hash_to_params(uri_params)
+
+        if uri.host && uri.scheme
+          uri.scheme + "://" + uri.host + uri.path + param
+        elsif uri.host
+          uri.host + uri.path  + param
+        elsif uri.path
+          uri.path + param
+        else
+          param
         end
       end
   end

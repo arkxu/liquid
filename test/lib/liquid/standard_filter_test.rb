@@ -229,4 +229,12 @@ class StandardFiltersTest < Test::Unit::TestCase
     assert_template_result "/good", "{{ '/good' | keep_locale:'' }}"
     assert_template_result "/good", "{{ '/good' | keep_locale:nil }}"
   end
+
+  def test_remove_param
+    assert_template_result "http://www.google.com?b=1", "{{ 'http://www.google.com?b=1&locale=en-US' | remove_param:'locale' }}"
+    assert_template_result "http://www.google.com/c?b=1", "{{ 'http://www.google.com/c?b=1' | remove_param:'locale' }}"
+    assert_template_result "sina.com.cn/a/b/c?b=3", "{{ 'sina.com.cn/a/b/c?b=3' | remove_param:'locale' }}"
+    assert_template_result "/good", "{{ '/good' | remove_param:'locale' }}"
+  end
+
 end # StandardFiltersTest

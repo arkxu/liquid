@@ -15,6 +15,9 @@ h2. New added/changed tags
   template.render(render_params, :registers => {:controller => self})
 </pre>
 
+* remove_param : remove the specified parameter from the given url. e.g {{ 'http://www.google.com?b=1&locale=en-US' | remove_param:'locale' }}
+* keep_locale : keep the current locale parameter in url if there is, otherwise add the specified. e.g {{ 'http://www.google.com/c?b=1' | keep_locale:'zh-CN' }}
+
 h2. Introduction
 
 Liquid is a template engine which I wrote for very specific requirements
