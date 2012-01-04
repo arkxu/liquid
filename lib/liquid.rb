@@ -19,8 +19,6 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-
 module Liquid
   FilterSeparator             = /\|/
   ArgumentSeparator           = ','
@@ -35,7 +33,7 @@ module Liquid
   VariableIncompleteEnd       = /\}\}?/
   QuotedString                = /"[^"]*"|'[^']*'/
   QuotedFragment              = /#{QuotedString}|(?:[^\s,\|'"]|#{QuotedString})+/
-  StrictQuotedFragment        = /"[^"]+"|'[^']+'|[^\s,\|,\:,\,]+/
+  StrictQuotedFragment        = /"[^"]+"|'[^']+'|[^\s|:,]+/
   FirstFilterArgument         = /#{FilterArgumentSeparator}(?:#{StrictQuotedFragment})/
   OtherFilterArgument         = /#{ArgumentSeparator}(?:#{StrictQuotedFragment})/
   SpacelessFilter             = /^(?:'[^']+'|"[^"]+"|[^'"])*#{FilterSeparator}(?:#{StrictQuotedFragment})(?:#{FirstFilterArgument}(?:#{OtherFilterArgument})*)?/
@@ -45,7 +43,6 @@ module Liquid
   PartialTemplateParser       = /#{TagStart}.*?#{TagEnd}|#{VariableStart}.*?#{VariableIncompleteEnd}/
   TemplateParser              = /(#{PartialTemplateParser}|#{AnyStartingTag})/
   VariableParser              = /\[[^\]]+\]|#{VariableSegment}+\??/
-  LiteralShorthand            = /^(?:\{\{\{\s?)(.*?)(?:\s*\}\}\})$/
 end
 
 require 'liquid/drop'

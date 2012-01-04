@@ -13,10 +13,6 @@ class ContextDrop < Liquid::Drop
     @context['forloop.index']
   end
 
-  def break
-    Breakpoint.breakpoint
-  end
-
   def before_method(method)
     return @context[method]
   end
@@ -36,7 +32,7 @@ class ProductDrop < Liquid::Drop
 
   class CatchallDrop < Liquid::Drop
     def before_method(method)
-      return 'method: ' << method
+      return 'method: ' << method.to_s
     end
   end
 
@@ -88,10 +84,15 @@ class DropsTest < Test::Unit::TestCase
 
   end
 
-  def test_text_drop
+  def test_unknown_method
     output = Liquid::Template.parse( ' {{ product.catchall.unknown }} '  ).render('product' => ProductDrop.new)
     assert_equal ' method: unknown ', output
 
+  end
+
+  def test_integer_argument_drop
+    output = Liquid::Template.parse( ' {{ product.catchall[8] }} '  ).render('product' => ProductDrop.new)
+    assert_equal ' method: 8 ', output
   end
 
   def test_text_array_drop
@@ -149,5 +150,13 @@ class DropsTest < Test::Unit::TestCase
 
   def test_enumerable_drop_size
     assert_equal '3', Liquid::Template.parse( '{{collection.size}}').render('collection' => EnumerableDrop.new)
+  end
+
+  def test_empty_string_value_access
+    assert_equal '', Liquid::Template.parse('{{ product[value] }}').render('product' => ProductDrop.new, 'value' => '')
+  end
+
+  def test_nil_value_access
+    assert_equal '', Liquid::Template.parse('{{ product[value] }}').render('product' => ProductDrop.new, 'value' => nil)
   end
 end # DropsTest

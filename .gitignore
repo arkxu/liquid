@@ -1,4 +1,10 @@
+*~
 *.gem
 *.swp
 pkg
+<<<<<<< HEAD
 .DS_Store
+=======
+*.rbc
+.rvmrc
+>>>>>>> 1a1b4702d78022c113cacd2304c35aa9ffc6b5b7

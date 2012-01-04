@@ -9,13 +9,19 @@ module Liquid
   #  {{ foo }}
   #
   class Assign < Tag
+<<<<<<< HEAD
     Syntax = /(#{VariableSignature}+)\s*=\s*(#{QuotedFragment}+)/
 
     def initialize(tag_name, markup, tokens)
       @var = Liquid::Variable.new(markup)
+=======
+    Syntax = /(#{VariableSignature}+)\s*=\s*(.*)\s*/   
+  
+    def initialize(tag_name, markup, tokens)          
+>>>>>>> 1a1b4702d78022c113cacd2304c35aa9ffc6b5b7
       if markup =~ Syntax
         @to = $1
-        @from = $2
+        @from = Variable.new($2)
       else
         raise SyntaxError.new("Syntax Error in 'assign' - Valid syntax: assign [var] = [source]")
       end
@@ -24,6 +30,7 @@ module Liquid
     end
 
     def render(context)
+<<<<<<< HEAD
       if @var.filters.size > 0
         @var.filters.inject(context[@from]) do |output, filter|
           filterargs = filter[1].to_a.collect do |a|
@@ -45,4 +52,13 @@ module Liquid
   end
 
   Template.register_tag('assign', Assign)
+=======
+       context.scopes.last[@to] = @from.render(context)
+       ''
+    end 
+  
+  end  
+  
+  Template.register_tag('assign', Assign)  
+>>>>>>> 1a1b4702d78022c113cacd2304c35aa9ffc6b5b7
 end

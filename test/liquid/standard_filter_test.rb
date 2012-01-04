@@ -48,6 +48,14 @@ class StandardFiltersTest < Test::Unit::TestCase
     assert_equal '中文的测试结果是什么', @filters.truncate('中文的测试结果是什么',11)
   end
 
+  def test_strip
+    assert_equal ['12','34'], @filters.split('12~34', '~')
+    assert_equal ['A? ',' ,Z'], @filters.split('A? ~ ~ ~ ,Z', '~ ~ ~')
+    assert_equal ['A?Z'], @filters.split('A?Z', '~')
+    # Regexp works although Liquid does not support.
+    assert_equal ['A','Z'], @filters.split('AxZ', /x/)
+  end
+
   def test_escape
     assert_equal '&lt;strong&gt;', @filters.escape('<strong>')
     assert_equal '&lt;strong&gt;', @filters.h('<strong>')
@@ -124,6 +132,9 @@ class StandardFiltersTest < Test::Unit::TestCase
     assert_equal "07/16/2004", @filters.date("Fri Jul 16 01:00:00 2004", "%m/%d/%Y")
 
     assert_equal nil, @filters.date(nil, "%B")
+
+    assert_equal "07/05/2006", @filters.date(1152098955, "%m/%d/%Y")
+    assert_equal "07/05/2006", @filters.date("1152098955", "%m/%d/%Y")
   end
 
 
@@ -189,6 +200,7 @@ class StandardFiltersTest < Test::Unit::TestCase
     assert_template_result "Liquid error: divided by 0", "{{ 5 | divided_by:0 }}"
   end
 
+<<<<<<< HEAD
   def test_mod_by
     assert_template_result "0", "{{ 12 | mod_by:3 }}"
     assert_template_result "2", "{{ 14 | mod_by:3 }}"
@@ -198,6 +210,10 @@ class StandardFiltersTest < Test::Unit::TestCase
 
     assert_template_result "0", "{{ 15 | mod_by:15 }}"
     #assert_template_result "Liquid error: mod by 0", "{{ 5 | mod_by:0 }}"
+=======
+  def test_modulo
+    assert_template_result "1", "{{ 3 | modulo:2 }}"
+>>>>>>> 1a1b4702d78022c113cacd2304c35aa9ffc6b5b7
   end
 
   def test_append
