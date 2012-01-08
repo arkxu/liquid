@@ -1,6 +1,6 @@
 module WillPaginate::Liquidized   
   module ViewHelpers
-    include WillPaginate::ActionView
+    include WillPaginate::ViewHelpers::ActionView
     
     alias_method :will_paginate_original, :will_paginate
     

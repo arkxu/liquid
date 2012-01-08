@@ -31,16 +31,20 @@ module Liquid
       context.stack do          
         execute_else_block = true
         
-        output = ''
-        @blocks.each do |block|
+        @blocks.inject([]) do |output, block|
+      
           if block.else? 
+            
             return render_all(block.attachment, context) if execute_else_block
+            
           elsif block.evaluate(context)
+            
             execute_else_block = false        
-            output << render_all(block.attachment, context)
+            output += render_all(block.attachment, context)                    
           end            
+      
+          output
         end
-        output
       end          
     end
     

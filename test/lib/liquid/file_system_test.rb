@@ -5,7 +5,7 @@ class FileSystemTest < Test::Unit::TestCase
 
   def test_default
     assert_raise(FileSystemError) do
-      BlankFileSystem.new.read_template_file("dummy", {'dummy'=>'smarty'})
+      BlankFileSystem.new.read_template_file({'dummy'=>'smarty'}, "dummy")
     end
   end
 

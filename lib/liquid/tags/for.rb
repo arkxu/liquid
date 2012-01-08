@@ -13,8 +13,6 @@ module Liquid
   #      <div {% if forloop.first %}class="first"{% endif %}>
   #        Item {{ forloop.index }}: {{ item.name }}
   #      </div>
-  #    {% else %}
-  #      There is nothing in the collection.
   #    {% endfor %}
   #
   # You can also define a limit and offset much like SQL.  Remember
@@ -60,13 +58,7 @@ module Liquid
         raise SyntaxError.new("Syntax Error in 'for loop' - Valid syntax: for [item] in [collection]")
       end
 
-      @nodelist = @for_block = []
       super
-    end
-
-    def unknown_tag(tag, markup, tokens)
-      return super unless tag == 'else'
-      @nodelist = @else_block = []
     end
   
     def render(context)        
@@ -75,7 +67,7 @@ module Liquid
       collection = context[@collection_name]
       collection = collection.to_a if collection.is_a?(Range)
     
-      return render_else(context) unless collection.respond_to?(:each) 
+      return '' unless collection.respond_to?(:each) 
                                                  
       from = if @attributes['offset'] == 'continue'
         context.registers[:for][@name].to_i
@@ -89,11 +81,11 @@ module Liquid
                        
       segment = slice_collection_using_each(collection, from, to)      
       
-      return render_else(context) if segment.empty?
+      return '' if segment.empty?
       
       segment.reverse! if @reversed
 
-      result = ''
+      result = []
         
       length = segment.length            
             
@@ -113,7 +105,7 @@ module Liquid
             'first'   => (index == 0),
             'last'    => (index == length - 1) }
 
-          result << render_all(@for_block, context)
+          result << render_all(@nodelist, context)
         end
       end
       result     
@@ -138,13 +130,6 @@ module Liquid
 
       segments
     end
-
-    private
-
-      def render_else(context)
-        return @else_block ? [render_all(@else_block, context)] : ''
-      end
-
   end
 
   Template.register_tag('for', For)

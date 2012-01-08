@@ -26,7 +26,7 @@ module Liquid
 
     def render(context)
       output = super
-      context.scopes.last[@to] = output
+      context.scopes.last[@to] = output.join
       ''
     end
   end

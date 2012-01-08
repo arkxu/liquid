@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class IfElseTagTest < Test::Unit::TestCase
+class IfElseTest < Test::Unit::TestCase
   include Liquid
 
   def test_if

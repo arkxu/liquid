@@ -31,9 +31,7 @@ module Liquid
     end
 
     def escape_once(input)
-      ActionView::Helpers::TagHelper.escape_once(input)
-    rescue NameError
-      input
+      ActionView::Helpers::TagHelper.escape_once(input) rescue input
     end
 
     alias_method :h, :escape
@@ -52,11 +50,6 @@ module Liquid
       l = words.to_i - 1
       l = 0 if l < 0
       wordlist.length > l ? wordlist[0..l].join(" ") + truncate_string : input
-    end
-
-    # Split input string into an array of substrings separated by given pattern.
-    def split(input, pattern)
-      input.split(pattern)
     end
 
     def strip_html(input)
@@ -187,10 +180,6 @@ module Liquid
         return input.to_s
       end
 
-      if ((input.is_a?(String) && !/^\d+$/.match(input.to_s).nil?) || input.is_a?(Integer)) && input.to_i > 0
-        input = Time.at(input.to_i)
-      end
-
       date = input.is_a?(String) ? Time.parse(input) : input
 
       if date.respond_to?(:strftime)
@@ -240,7 +229,6 @@ module Liquid
       to_number(input) / to_number(operand)
     end
 
-<<<<<<< HEAD
     def mod_by(input, operand)
       to_number(input) % to_number(operand)
     end
@@ -271,12 +259,6 @@ module Liquid
       url_add_param(url, uri_params)
     end
 
-=======
-    def modulo(input, operand)
-      to_number(input) % to_number(operand)
-    end
-
->>>>>>> 1a1b4702d78022c113cacd2304c35aa9ffc6b5b7
     private
 
       def to_number(obj)
